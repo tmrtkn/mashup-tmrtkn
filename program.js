@@ -4,7 +4,10 @@ var _ = require('lodash');
 var html = '<h1>NoData!</h1>';
 
 http.createServer(function (req,res) {
-	res.writeHead(200, {'Content-Type': 'text/html'});
+	res.writeHead(200, {
+		'Content-Type': 'text/html;charset=utf-8'
+    });
+
 	res.end(html);
 }).listen(80, '127.0.0.1');
 
@@ -18,13 +21,13 @@ http.get(booksUrl, function(res) {
 
 	var body = "";
 
-
 	res.on("data", function(chunk) {
 		body += chunk;
 	});
 
 	res.on("end", function() {
 		var bookList = _.map(JSON.parse(body).records, function(d) {
+
 			return {
 				displayName: d.title,
 				year: d.year
